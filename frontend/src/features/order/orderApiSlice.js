@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 export const orderApi = createApi({
     reducerPath: 'orderApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:5000/api/',
+        baseUrl: import.meta.env.VITE_API_URL || 'http://localhost:5000/api/',
         prepareHeaders: (headers, { getState }) => {
             const token = getState().auth.userInfo?.token;
             // Only strictly attach token if it exists (public routes won't have it)
