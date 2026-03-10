@@ -40,7 +40,8 @@ const createMenu = async (req, res) => {
     let image = req.body.image || '';
 
     if (req.file) {
-        image = '/' + req.file.path.replace(/\\/g, '/');
+        // With Cloudinary storage, req.file.path is the secure HTTPS URL
+        image = req.file.path;
     }
 
     // Convert string 'true'/'false' from FormData
@@ -93,7 +94,8 @@ const updateMenu = async (req, res) => {
     let { name, description, price, category, subcategory, image, isAvailable } = req.body;
 
     if (req.file) {
-        image = '/' + req.file.path.replace(/\\/g, '/');
+        // With Cloudinary storage, req.file.path is the secure HTTPS URL
+        image = req.file.path;
     }
 
     // Convert string 'true'/'false' from FormData
