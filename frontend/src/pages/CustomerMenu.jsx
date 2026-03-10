@@ -264,7 +264,7 @@ const CustomerMenu = () => {
 
                 {/* Detailed Item Modal Overlay */}
                 {selectedItem && (
-                    <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setSelectedItem(null)}>
+                    <div className="fixed inset-0 z-[110] flex items-end sm:items-center justify-center p-0 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-in fade-in duration-300" onClick={() => setSelectedItem(null)}>
                         <div
                             onClick={e => e.stopPropagation()}
                             className="w-full sm:w-[500px] bg-white dark:bg-slate-950 rounded-t-3xl sm:rounded-[2rem] shadow-2xl overflow-hidden flex flex-col max-h-[90vh] animate-in slide-in-from-bottom sm:zoom-in-95 duration-300 border border-slate-100 dark:border-slate-800"
