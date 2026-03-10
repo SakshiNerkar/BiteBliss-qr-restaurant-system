@@ -5,9 +5,10 @@ import { useGetTableOrderStatusQuery } from '../features/order/orderApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, updateQuantity, removeFromCart, clearSession } from '../features/cart/cartSlice';
 import { toast } from 'react-toastify';
-import { MdAdd, MdRemove, MdFastfood, MdSearch, MdReceiptLong, MdDeleteOutline, MdStarRate, MdStar, MdClose, MdLocalFireDepartment, MdThumbUp } from 'react-icons/md';
+import { MdAdd, MdRemove, MdFastfood, MdSearch, MdReceiptLong, MdDeleteOutline, MdStarRate, MdStar, MdClose, MdLocalFireDepartment, MdThumbUp, MdSort, MdDarkMode, MdLightMode, MdFilterList } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { getImageUrl } from '../utils/getImageUrl';
+import { useEffect } from 'react';
 
 const CustomerMenu = () => {
     const { data: menuItems, isLoading: isMenuLoading } = useGetMenuQuery();
@@ -25,6 +26,12 @@ const CustomerMenu = () => {
 
     const [activeCategory, setActiveCategory] = useState('All');
     const [searchTerm, setSearchTerm] = useState('');
+    const [sortOrder, setSortOrder] = useState('none'); // 'none', 'lowToHigh', 'highToLow'
+    const [isDarkMode, setIsDarkMode] = useState(() => {
+        // Initialize from local storage or system preference
+        return localStorage.getItem('theme') === 'dark' || 
+               (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches);
+    });
     const [selectedItem, setSelectedItem] = useState(null);
 
     const [createReview] = useCreateReviewMutation();
@@ -77,12 +84,19 @@ const CustomerMenu = () => {
     );
 
     try {
-        const filteredItems = (menuItems || []).filter(item => {
+        let filteredItems = (menuItems || []).filter(item => {
             const matchesCategory = activeCategory === 'All' || item.category?._id === activeCategory || item.category === activeCategory;
             const matchesSearch = (item.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
                 (item.description && item.description.toLowerCase().includes((searchTerm || '').toLowerCase()));
             return matchesCategory && matchesSearch;
         });
+
+        // Apply Sorting
+        if (sortOrder === 'lowToHigh') {
+            filteredItems = [...filteredItems].sort((a, b) => a.price - b.price);
+        } else if (sortOrder === 'highToLow') {
+            filteredItems = [...filteredItems].sort((a, b) => b.price - a.price);
+        }
 
         const getCartQuantity = (id) => {
             const item = (cartItems || []).find(c => c._id === id);
@@ -108,8 +122,18 @@ const CustomerMenu = () => {
 
         const showSpotlights = searchTerm === '' && activeCategory === 'All';
 
+        useEffect(() => {
+            if (isDarkMode) {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('theme', 'dark');
+            } else {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('theme', 'light');
+            }
+        }, [isDarkMode]);
+
         return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 pb-36 font-sans">
+            <div className={`min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 pb-36 font-sans ${isDarkMode ? 'dark' : ''}`}>
                 {/* Top Navigation */}
                 <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-4 transition-colors">
                     <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -134,16 +158,49 @@ const CustomerMenu = () => {
                 </div>
 
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-6">
-                    {/* Search Bar */}
-                    <div className="relative mb-6">
-                        <MdSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" size={24} />
-                        <input
-                            type="text"
-                            placeholder="Search dishes, ingredients..."
-                            value={searchTerm}
-                            onChange={(e) => setSearchTerm(e.target.value)}
-                            className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all shadow-sm font-medium text-lg"
-                        />
+                    {/* Search & Theme & Sort Area */}
+                    <div className="flex flex-col gap-4 mb-6">
+                        <div className="flex items-center gap-3">
+                            <div className="relative flex-1 group">
+                                <MdSearch className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-primary-500 transition-colors" size={24} />
+                                <input
+                                    type="text"
+                                    placeholder="Search dishes, ingredients..."
+                                    value={searchTerm}
+                                    onChange={(e) => setSearchTerm(e.target.value)}
+                                    className="w-full pl-12 pr-4 py-4 rounded-2xl border-2 border-slate-100 dark:border-slate-800 bg-white dark:bg-slate-900 text-slate-900 dark:text-white placeholder-slate-400 dark:placeholder-slate-500 focus:outline-none focus:border-primary-500 focus:ring-4 focus:ring-primary-500/10 transition-all shadow-sm font-medium text-lg"
+                                />
+                            </div>
+                            
+                            <button 
+                                onClick={() => setIsDarkMode(!isDarkMode)}
+                                className="p-4 rounded-2xl bg-white dark:bg-slate-900 border-2 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-300 hover:border-primary-500 dark:hover:border-primary-500 transition-all shadow-sm active:scale-95"
+                                title="Toggle Theme"
+                            >
+                                {isDarkMode ? <MdLightMode size={24} /> : <MdDarkMode size={24} />}
+                            </button>
+                        </div>
+
+                        <div className="flex items-center gap-3 overflow-x-auto scrollbar-hide">
+                            <div className="flex items-center items-center gap-2 bg-slate-100 dark:bg-slate-800/50 px-4 py-2 rounded-xl text-slate-500 dark:text-slate-400 shrink-0">
+                                <MdSort size={20} />
+                                <span className="text-sm font-bold uppercase tracking-wider">Price</span>
+                            </div>
+                            
+                            <button 
+                                onClick={() => setSortOrder(sortOrder === 'lowToHigh' ? 'none' : 'lowToHigh')}
+                                className={`whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all border-2 ${sortOrder === 'lowToHigh' ? 'bg-primary-600 border-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400'}`}
+                            >
+                                Low to High
+                            </button>
+                            
+                            <button 
+                                onClick={() => setSortOrder(sortOrder === 'highToLow' ? 'none' : 'highToLow')}
+                                className={`whitespace-nowrap px-5 py-2.5 rounded-xl text-sm font-bold transition-all border-2 ${sortOrder === 'highToLow' ? 'bg-primary-600 border-primary-600 text-white shadow-md' : 'bg-white dark:bg-slate-900 border-slate-100 dark:border-slate-800 text-slate-600 dark:text-slate-400'}`}
+                            >
+                                High to Low
+                            </button>
+                        </div>
                     </div>
 
                     {/* Category Pills */}
