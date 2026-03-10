@@ -39,9 +39,84 @@ const CustomerMenu = () => {
     const [reviewRating, setReviewRating] = useState(5);
     const [isWritingReview, setIsWritingReview] = useState(false);
 
-    // If an order exists but is paid/cancelled, we allow NEW orders (backend handles this cleanly)
+    // Dark Mode Side Effect
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.classList.add('dark');
+            localStorage.setItem('theme', 'dark');
+        } else {
+            document.documentElement.classList.remove('dark');
+            localStorage.setItem('theme', 'light');
+        }
+    }, [isDarkMode]);
+
+    // Derived State
     const activeSessionFound = activeOrder && activeOrder.status !== 'Paid' && activeOrder.status !== 'Cancelled';
 
+    const popularItems = useMemo(() => {
+        return [...(menuItems || [])]
+            .filter(item => item.isAvailable)
+            .sort((a, b) => (b.totalOrders || 0) - (a.totalOrders || 0))
+            .slice(0, 4);
+    }, [menuItems]);
+
+    const recommendedItems = useMemo(() => {
+        return [...(menuItems || [])]
+            .filter(item => item.isAvailable)
+            .sort((a, b) => (b.ratingsAverage || 0) - (a.ratingsAverage || 0))
+            .filter(item => !popularItems.find(p => p._id === item._id)) // Avoid duplicates
+            .slice(0, 4);
+    }, [menuItems, popularItems]);
+
+    const filteredItems = useMemo(() => {
+        let items = (menuItems || []).filter(item => {
+            const matchesCategory = activeCategory === 'All' || item.category?._id === activeCategory || item.category === activeCategory;
+            const matchesSearch = (item.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
+                (item.description && item.description.toLowerCase().includes((searchTerm || '').toLowerCase()));
+            return matchesCategory && matchesSearch;
+        });
+
+        if (sortOrder === 'lowToHigh') {
+            return [...items].sort((a, b) => a.price - b.price);
+        } else if (sortOrder === 'highToLow') {
+            return [...items].sort((a, b) => b.price - a.price);
+        }
+        return items;
+    }, [menuItems, activeCategory, searchTerm, sortOrder]);
+
+    const getCartQuantity = (id) => {
+        const item = (cartItems || []).find(c => c._id === id);
+        return item ? item.quantity : 0;
+    };
+
+    const cartTotalAmount = useMemo(() => 
+        (cartItems || []).reduce((acc, item) => acc + ((item.price || 0) * item.quantity), 0)
+    , [cartItems]);
+
+    const cartTotalItems = useMemo(() => 
+        (cartItems || []).reduce((acc, item) => acc + item.quantity, 0)
+    , [cartItems]);
+
+    const groupedItems = useMemo(() => {
+        return filteredItems.reduce((acc, item) => {
+            const subName = item.subcategory?.name || 'Menu Iterations';
+            if (!acc[subName]) acc[subName] = [];
+            acc[subName].push(item);
+            return acc;
+        }, {});
+    }, [filteredItems]);
+
+    const sortedSubcategories = useMemo(() => {
+        return Object.keys(groupedItems).sort((a, b) => {
+            if (a === 'Menu Iterations') return 1;
+            if (b === 'Menu Iterations') return -1;
+            return a.localeCompare(b);
+        });
+    }, [groupedItems]);
+
+    const showSpotlights = searchTerm === '' && activeCategory === 'All';
+
+    // Event Handlers
     const handleInitialAdd = (item) => {
         dispatch(addToCart({ ...item, quantity: 1 }));
         toast.success(`Added ${item.name} to cart!`, { autoClose: 1500 });
@@ -59,21 +134,6 @@ const CustomerMenu = () => {
         }
     };
 
-    const popularItems = useMemo(() => {
-        return [...(menuItems || [])]
-            .filter(item => item.isAvailable)
-            .sort((a, b) => (b.totalOrders || 0) - (a.totalOrders || 0))
-            .slice(0, 4);
-    }, [menuItems]);
-
-    const recommendedItems = useMemo(() => {
-        return [...(menuItems || [])]
-            .filter(item => item.isAvailable)
-            .sort((a, b) => (b.ratingsAverage || 0) - (a.ratingsAverage || 0))
-            .filter(item => !popularItems.find(p => p._id === item._id)) // Avoid duplicates
-            .slice(0, 4);
-    }, [menuItems, popularItems]);
-
     if (isMenuLoading || isCatLoading || isOrderLoading) return (
         <div className="min-h-screen flex items-center justify-center bg-slate-50 dark:bg-slate-950">
             <div className="animate-pulse flex flex-col items-center gap-4">
@@ -83,57 +143,8 @@ const CustomerMenu = () => {
         </div>
     );
 
-    try {
-        let filteredItems = (menuItems || []).filter(item => {
-            const matchesCategory = activeCategory === 'All' || item.category?._id === activeCategory || item.category === activeCategory;
-            const matchesSearch = (item.name || '').toLowerCase().includes((searchTerm || '').toLowerCase()) ||
-                (item.description && item.description.toLowerCase().includes((searchTerm || '').toLowerCase()));
-            return matchesCategory && matchesSearch;
-        });
-
-        // Apply Sorting
-        if (sortOrder === 'lowToHigh') {
-            filteredItems = [...filteredItems].sort((a, b) => a.price - b.price);
-        } else if (sortOrder === 'highToLow') {
-            filteredItems = [...filteredItems].sort((a, b) => b.price - a.price);
-        }
-
-        const getCartQuantity = (id) => {
-            const item = (cartItems || []).find(c => c._id === id);
-            return item ? item.quantity : 0;
-        };
-
-        const cartTotalAmount = (cartItems || []).reduce((acc, item) => acc + ((item.price || 0) * item.quantity), 0);
-        const cartTotalItems = (cartItems || []).reduce((acc, item) => acc + item.quantity, 0);
-
-        // Group filtered items by subcategory conditionally
-        const groupedItems = filteredItems.reduce((acc, item) => {
-            const subName = item.subcategory?.name || 'Menu Iterations';
-            if (!acc[subName]) acc[subName] = [];
-            acc[subName].push(item);
-            return acc;
-        }, {});
-
-        const sortedSubcategories = Object.keys(groupedItems).sort((a, b) => {
-            if (a === 'Menu Iterations') return 1;
-            if (b === 'Menu Iterations') return -1;
-            return a.localeCompare(b);
-        });
-
-        const showSpotlights = searchTerm === '' && activeCategory === 'All';
-
-        useEffect(() => {
-            if (isDarkMode) {
-                document.documentElement.classList.add('dark');
-                localStorage.setItem('theme', 'dark');
-            } else {
-                document.documentElement.classList.remove('dark');
-                localStorage.setItem('theme', 'light');
-            }
-        }, [isDarkMode]);
-
-        return (
-            <div className={`min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 pb-36 font-sans ${isDarkMode ? 'dark' : ''}`}>
+    return (
+        <div className={`min-h-screen bg-slate-50 dark:bg-slate-950 transition-colors duration-300 pb-36 font-sans ${isDarkMode ? 'dark' : ''}`}>
                 {/* Top Navigation */}
                 <div className="sticky top-0 z-30 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 px-4 sm:px-6 py-4 transition-colors">
                     <div className="max-w-7xl mx-auto flex items-center justify-between">
@@ -404,15 +415,6 @@ const CustomerMenu = () => {
                 )}
             </div>
         );
-    } catch (error) {
-        return (
-            <div className="min-h-screen flex flex-col items-center justify-center p-8 text-center text-red-500">
-                <h1 className="text-3xl font-black mb-4">React Render Crash</h1>
-                <p className="font-bold">{error.message}</p>
-                <pre className="text-xs text-left bg-slate-100 p-4 rounded-xl mt-4 max-w-2xl overflow-auto">{error.stack}</pre>
-            </div>
-        );
-    }
 };
 
 const ItemCard = ({ item, qty, onQuantityChange, onAdd, onSelect }) => {
