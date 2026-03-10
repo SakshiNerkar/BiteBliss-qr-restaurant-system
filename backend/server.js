@@ -31,6 +31,7 @@ const tableRoutes = require('./routes/tableRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const subcategoryRoutes = require('./routes/subcategoryRoutes');
 const reviewRoutes = require('./routes/reviewRoutes');
+const seedRoute = require('./routes/seedRoute');
 
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
@@ -42,6 +43,7 @@ app.use('/api/tables', tableRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/subcategories', subcategoryRoutes);
 app.use('/api/reviews', reviewRoutes);
+app.use('/api/seed', seedRoute);
 
 app.get('/', (req, res) => {
     res.send('API is running...');
