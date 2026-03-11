@@ -27,53 +27,55 @@ const CustomerLayout = () => {
         return <Navigate to="/" replace />;
     }
 
-    // Advanced Zomato-style Bottom Navigation link
     const NavLink = ({ to, icon, label, exact = false, badge = 0 }) => {
         const isActive = exact ? location.pathname === to : location.pathname.startsWith(to);
 
         return (
             <button
                 onClick={() => navigate(to)}
-                className={`flex flex-col items-center justify-center w-full h-full relative transition-all duration-300 ${isActive ? 'text-primary-600 dark:text-primary-400 transform -translate-y-1' : 'text-slate-400 hover:text-slate-600 dark:text-slate-500 dark:hover:text-slate-300'}`}
+                className={`flex flex-col items-center justify-center w-full h-full relative transition-all duration-500 ${isActive ? 'text-primary-600 dark:text-primary-400' : 'text-slate-400 dark:text-slate-500 hover:text-slate-900 dark:hover:text-slate-200'}`}
             >
-                {isActive && (
-                    <div className="absolute -top-3 w-12 h-1 bg-primary-600 dark:bg-primary-500 rounded-b-full transition-all duration-300 shadow-[0_4px_10px_rgba(79,70,229,0.4)]"></div>
-                )}
-                <div className={`relative p-2 rounded-2xl transition-colors duration-300 ${isActive ? 'bg-primary-50 dark:bg-primary-900/30' : 'bg-transparent'}`}>
+                <div className={`relative p-3 rounded-2xl transition-all duration-500 transform ${isActive ? 'bg-primary-50 dark:bg-primary-900/40 scale-110 -translate-y-1' : 'bg-transparent hover:scale-105'}`}>
                     {icon}
                     {badge > 0 && (
-                        <span className="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900 shadow-sm animate-in zoom-in-50 duration-300">
+                        <span className="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] font-black w-5 h-5 flex items-center justify-center rounded-full border-2 border-white dark:border-slate-900 shadow-lg shadow-red-500/20 animate-in zoom-in-50 duration-300">
                             {badge > 9 ? '9+' : badge}
                         </span>
                     )}
+                    {isActive && (
+                        <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 bg-primary-600 dark:bg-primary-500 rounded-full shadow-[0_0_10px_rgba(79,70,229,0.5)]"></div>
+                    )}
                 </div>
-                <span className={`text-[11px] mt-1 transition-all duration-300 tracking-wide ${isActive ? 'font-black' : 'font-bold'}`}>{label}</span>
+                <span className={`text-[10px] mt-2 transition-all duration-500 uppercase tracking-widest font-black ${isActive ? 'opacity-100 translate-y-0' : 'opacity-60 translate-y-1'}`}>{label}</span>
             </button>
         );
     };
 
     return (
-        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-slate-950 font-sans transition-colors duration-300">
-            {/* Top Header Placeholder (Can be removed if individual pages have their own headers) */}
-            <header className="hidden md:flex bg-white dark:bg-slate-900 shadow-sm sticky top-0 z-50 transition-colors">
-                <div className="max-w-3xl mx-auto px-4 h-16 w-full flex items-center justify-between border-b border-slate-100 dark:border-slate-800">
-                    <h1 className="text-xl font-black text-slate-900 dark:text-white capitalize flex items-center tracking-tight gap-2">
-                        <MdDinnerDining className="text-primary-600 dark:text-primary-400" size={28} /> BiteBliss
+        <div className="flex flex-col min-h-screen bg-slate-50 dark:bg-[#020617] font-sans transition-all duration-700">
+            {/* Desktop Header */}
+            <header className="hidden md:flex glass-card border-b border-white/10 dark:border-white/5 sticky top-0 z-50">
+                <div className="max-w-3xl mx-auto px-6 h-20 w-full flex items-center justify-between">
+                    <h1 className="text-2xl font-black text-slate-900 dark:text-white capitalize flex items-center tracking-tighter gap-3">
+                        <div className="p-2 bg-primary-600 rounded-xl text-white shadow-lg shadow-primary-600/20 animate-float">
+                            <MdDinnerDining size={24} />
+                        </div>
+                        BiteBliss
                     </h1>
                 </div>
             </header>
 
-            {/* Main Content Area - with generous bottom padding so the sticky nav NEVER hides content */}
-            <main className="flex-grow w-full max-w-md md:max-w-3xl mx-auto pb-28 md:pb-32">
+            {/* Main Content Area */}
+            <main className="flex-grow w-full max-w-md md:max-w-3xl mx-auto pb-32 md:pb-36 px-0 sm:px-4">
                 <Outlet />
             </main>
 
-            {/* Zomato-Style Sticky Bottom Navigation */}
-            <nav className="fixed bottom-0 w-full bg-white dark:bg-slate-900 border-t border-slate-200/60 dark:border-slate-800/60 h-[84px] md:h-[92px] z-[100] shadow-[0_-15px_40px_rgba(0,0,0,0.06)] dark:shadow-[0_-10px_30px_rgba(0,0,0,0.5)] transition-colors duration-300 flex justify-center pb-safe">
-                <div className="w-full max-w-md md:max-w-3xl flex justify-around items-center h-full px-2 sm:px-6">
+            {/* Bottom Navigation */}
+            <nav className="fixed bottom-0 w-full z-[100] px-4 pb-6 sm:px-8">
+                <div className="max-w-2xl mx-auto glass-card rounded-[2.5rem] border border-white/20 dark:border-white/10 h-[88px] premium-shadow flex items-center justify-around px-4">
                     <NavLink to="/menu" icon={<MdRestaurantMenu size={28} />} label="Menu" exact={true} />
                     <NavLink to="/cart" icon={<MdShoppingCart size={28} />} label="Cart" badge={cartCount} />
-                    <NavLink to="/order-status" icon={<MdReceiptLong size={28} />} label="Tracker" />
+                    <NavLink to="/order-status" icon={<MdReceiptLong size={28} />} label="Track" />
                 </div>
             </nav>
         </div>

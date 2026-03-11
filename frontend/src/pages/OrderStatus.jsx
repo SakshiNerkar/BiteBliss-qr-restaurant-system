@@ -95,14 +95,14 @@ const OrderStatus = () => {
 
     if (!tableNo) {
         return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center transition-colors">
-                <div className="w-24 h-24 bg-primary-100 dark:bg-primary-900/30 text-primary-500 rounded-[2rem] flex items-center justify-center mb-6 shadow-md drop-shadow-xl border border-primary-200 dark:border-primary-800 rotate-6">
-                    <MdOutlineTimer size={48} />
+            <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center transition-all duration-700">
+                <div className="w-24 h-24 glass-card bg-primary-600 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-2xl shadow-primary-600/30 rotate-6 animate-float">
+                    <MdOutlineTimer className="text-white" size={48} />
                 </div>
-                <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-3">No Table Selected</h2>
-                <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium">Please scan your QR code again to securely track your order.</p>
-                <button onClick={() => navigate('/')} className="bg-primary-600 hover:bg-primary-700 text-white font-bold px-10 py-4 rounded-2xl shadow-xl shadow-primary-500/20 active:scale-95 transition-all">
-                    Return to Home
+                <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-3 tracking-tighter uppercase">No Table Found</h2>
+                <p className="text-slate-500 dark:text-slate-400 mb-10 font-bold max-w-xs mx-auto uppercase tracking-widest text-xs">Please scan the table QR code to track your order.</p>
+                <button onClick={() => navigate('/')} className="bg-primary-600 hover:bg-primary-700 text-white font-black px-12 py-5 rounded-2xl shadow-xl shadow-primary-600/30 active:scale-95 transition-all uppercase tracking-widest text-sm">
+                    Return Home
                 </button>
             </div>
         );
@@ -110,25 +110,25 @@ const OrderStatus = () => {
 
     if (isLoading) {
         return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center transition-colors">
-                <div className="w-16 h-16 border-4 border-primary-200 border-t-primary-600 dark:border-primary-900 dark:border-t-primary-500 rounded-full animate-spin mb-4 shadow-lg shadow-primary-500/20"></div>
-                <h2 className="text-lg font-bold text-slate-600 dark:text-slate-400 tracking-widest uppercase">Syncing Order...</h2>
+            <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center transition-all duration-700">
+                <div className="w-20 h-20 border-4 border-primary-100 border-t-primary-600 rounded-full animate-spin mb-8 shadow-2xl shadow-primary-600/20"></div>
+                <h2 className="text-xs font-black text-slate-500 dark:text-slate-400 tracking-[0.3em] uppercase animate-pulse">Establishing Connection...</h2>
             </div>
         );
     }
 
     if (!activeOrder) {
         return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center pt-20 pb-40 transition-colors">
-                <div className="w-32 h-32 bg-slate-100 dark:bg-slate-900 text-slate-400 dark:text-slate-600 rounded-[3rem] flex items-center justify-center mb-8 shadow-inner border border-slate-200 dark:border-slate-800 rotate-3">
+            <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center pt-20 pb-40 transition-all duration-700">
+                <div className="w-32 h-32 glass-card bg-slate-100 dark:bg-slate-900 text-slate-400 rounded-[3rem] flex items-center justify-center mb-10 shadow-inner border border-white/5 rotate-3">
                     <MdLocalDining size={64} />
                 </div>
-                <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-4">No active orders</h2>
-                <p className="text-slate-500 dark:text-slate-400 mb-8 font-medium max-w-sm leading-relaxed">
-                    You haven't placed an order yet, or your previous session was finalized.
+                <h2 className="text-4xl font-black text-slate-900 dark:text-white mb-4 tracking-tighter uppercase">Quiet Kitchen</h2>
+                <p className="text-slate-500 dark:text-slate-400 mb-10 font-bold max-w-xs mx-auto uppercase tracking-widest text-xs leading-loose">
+                    No active orders found. Time to explore our latest specials?
                 </p>
-                <button onClick={() => navigate('/menu')} className="flex items-center text-primary-600 dark:text-primary-400 font-bold bg-white dark:bg-slate-900 border-2 border-primary-200 dark:border-primary-800 hover:border-primary-500 hover:bg-primary-50 dark:hover:bg-primary-900/40 shadow-sm transition-all px-8 py-4 rounded-2xl active:scale-95 group">
-                    <MdArrowBack className="mr-3 group-hover:-translate-x-1 transition-transform" size={24} />
+                <button onClick={() => navigate('/menu')} className="flex items-center gap-3 text-white font-black bg-primary-600 hover:bg-primary-700 active:scale-95 transition-all px-10 py-5 rounded-2xl shadow-xl shadow-primary-600/30 uppercase tracking-widest text-sm">
+                    <MdArrowBack size={24} />
                     <span>Browse Menu</span>
                 </button>
             </div>
@@ -147,14 +147,14 @@ const OrderStatus = () => {
 
     if (activeOrder.status === 'Cancelled') {
         return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center transition-colors animate-in zoom-in-95 duration-500">
-                <div className="w-24 h-24 bg-red-100 dark:bg-red-900/30 text-red-600 dark:text-red-400 rounded-[2rem] flex items-center justify-center mb-6 shadow-lg shadow-red-500/10 border border-red-200 dark:border-red-800">
-                    <MdClose size={48} />
+            <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center transition-all duration-700 animate-in zoom-in-95">
+                <div className="w-24 h-24 bg-rose-600 rounded-[2.5rem] flex items-center justify-center mb-8 shadow-2xl shadow-rose-600/30">
+                    <MdClose className="text-white" size={48} />
                 </div>
-                <h2 className="text-3xl font-black text-slate-900 dark:text-white mb-3">Order Cancelled</h2>
-                <p className="text-slate-500 dark:text-slate-400 mb-10 font-medium">Your order was successfully aborted by the staff.</p>
-                <button onClick={() => navigate('/menu')} className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-bold px-10 py-4 rounded-2xl shadow-xl shadow-slate-900/20 dark:shadow-white/10 active:scale-95 transition-transform flex items-center justify-center gap-2">
-                    <MdArrowBack size={20} /> Return to Menu
+                <h2 className="text-4xl font-black text-rose-600 mb-3 tracking-tighter uppercase">Order Cancelled</h2>
+                <p className="text-slate-500 dark:text-slate-400 mb-10 font-bold max-w-xs mx-auto uppercase tracking-widest text-xs leading-loose">This order was cancelled. Please contact staff for details.</p>
+                <button onClick={() => navigate('/menu')} className="bg-slate-900 dark:bg-white text-white dark:text-slate-900 font-black px-12 py-5 rounded-2xl shadow-xl active:scale-95 transition-all uppercase tracking-widest text-sm">
+                    Back to Menu
                 </button>
             </div>
         );
@@ -166,19 +166,19 @@ const OrderStatus = () => {
 
     if (isPaid) {
         return (
-            <div className="min-h-screen bg-slate-50 dark:bg-slate-950 flex flex-col items-center justify-center p-6 text-center transition-colors animate-in zoom-in-95 duration-500 pt-10">
-                <div className="w-28 h-28 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-500 dark:text-emerald-400 rounded-full flex items-center justify-center mb-8 shadow-2xl shadow-emerald-500/20 border border-emerald-200 dark:border-emerald-800 backdrop-blur-md">
-                    <MdCheckCircleOutline size={64} />
+            <div className="min-h-screen bg-slate-50 dark:bg-[#020617] flex flex-col items-center justify-center p-6 text-center transition-all duration-700 animate-in zoom-in-95 pt-10">
+                <div className="w-32 h-32 bg-emerald-600 rounded-full flex items-center justify-center mb-10 shadow-[0_0_50px_rgba(16,185,129,0.3)] animate-float">
+                    <MdCheckCircleOutline size={64} className="text-white" />
                 </div>
-                <h1 className="text-5xl font-black text-slate-900 dark:text-white mb-4 tracking-tight">Thank You!</h1>
-                <p className="text-slate-500 dark:text-slate-400 mb-10 font-medium max-w-sm text-lg leading-relaxed">Payment successful. Your session is now complete. Please visit us again!</p>
+                <h1 className="text-6xl font-black text-slate-900 dark:text-white mb-4 tracking-tighter uppercase"><span className="text-emerald-500">Success!</span></h1>
+                <p className="text-slate-500 dark:text-slate-400 mb-12 font-bold max-w-sm text-xs uppercase tracking-[0.2em] leading-loose">Payment confirmed. Your culinary session is complete. We hope to see you again soon!</p>
 
-                <div className="space-y-4 w-full max-w-sm">
-                    <button onClick={handleDownloadBill} className="w-full flex justify-center items-center bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 font-bold border-2 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-md transition-all px-6 py-5 rounded-2xl active:scale-95 group">
-                        <MdDownload className="mr-3 group-hover:translate-y-1 transition-transform" size={24} /> Download E-Receipt
+                <div className="space-y-5 w-full max-w-sm">
+                    <button onClick={handleDownloadBill} className="w-full flex justify-center items-center glass-card text-slate-900 dark:text-white font-black px-6 py-6 rounded-[2rem] active:scale-95 group uppercase tracking-widest text-sm">
+                        <MdDownload className="mr-3 group-hover:translate-y-1 transition-transform" size={24} /> E-Receipt
                     </button>
-                    <button onClick={() => { dispatch(clearSession()); window.location.href = '/'; }} className="w-full bg-primary-600 hover:bg-primary-700 text-white font-bold px-6 py-5 rounded-2xl shadow-xl shadow-primary-600/30 border border-primary-500 transition-all active:scale-95 flex items-center justify-center gap-2">
-                        Close Table <MdClose size={20} />
+                    <button onClick={() => { dispatch(clearSession()); window.location.href = '/'; }} className="w-full bg-primary-600 hover:bg-primary-700 text-white font-black px-6 py-6 rounded-[2.5rem] shadow-2xl shadow-primary-600/40 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-tighter text-lg">
+                        Close Table <MdClose size={24} />
                     </button>
                 </div>
             </div>
@@ -188,20 +188,20 @@ const OrderStatus = () => {
     return (
         <div className="w-full mx-auto relative font-sans animate-in fade-in duration-300 pb-10">
 
-            {/* Minimal Zomato-style Header Overlay */}
-            <div className="sticky top-0 z-30 bg-white/90 dark:bg-slate-950/90 backdrop-blur-lg border-b border-slate-100 dark:border-slate-800 px-4 sm:px-6 py-4 flex items-center justify-between shadow-sm">
-                <div className="flex items-center gap-3">
-                    <button onClick={() => navigate('/menu')} className="w-10 h-10 flex items-center justify-center bg-transparent text-slate-900 dark:text-white rounded-full hover:bg-slate-100 dark:hover:bg-slate-900 transition-colors active:scale-90">
+            {/* Header */}
+            <div className="sticky top-0 z-30 glass-card border-b border-white/10 dark:border-white/5 px-4 sm:px-6 py-5 flex items-center justify-between shadow-sm transition-all duration-700">
+                <div className="flex items-center gap-4">
+                    <button onClick={() => navigate('/menu')} className="w-11 h-11 flex items-center justify-center glass-card text-slate-900 dark:text-white rounded-xl hover:text-primary-500 active:scale-90 transition-all">
                         <MdArrowBack size={26} />
                     </button>
                     <div>
-                        <h1 className="text-xl font-black text-slate-900 dark:text-white tracking-tight leading-none mb-0.5">Live Tracker</h1>
-                        <p className="text-xs font-bold text-slate-500 flex items-center gap-1 uppercase tracking-widest">
-                            <MdDinnerDining size={14} /> Tracking Order
+                        <h1 className="text-2xl font-black text-slate-900 dark:text-white tracking-tighter leading-none mb-1">Live Tracker</h1>
+                        <p className="text-[10px] font-black text-slate-500 dark:text-slate-500 flex items-center gap-1 uppercase tracking-widest">
+                            <MdDinnerDining size={14} className="text-primary-600" /> Tracking Active
                         </p>
                     </div>
                 </div>
-                <button onClick={() => refetch()} className={`w-10 h-10 flex items-center justify-center bg-primary-50 dark:bg-primary-900/30 text-primary-600 dark:text-primary-400 rounded-full hover:bg-primary-100 transition-colors shadow-sm ${isFetching ? 'animate-spin' : 'active:scale-90'}`}>
+                <button onClick={() => refetch()} className={`w-11 h-11 flex items-center justify-center glass-card text-primary-600 dark:text-primary-400 rounded-xl hover:bg-primary-600 hover:text-white transition-all ${isFetching ? 'animate-spin' : 'active:scale-90'}`}>
                     <MdRefresh size={22} />
                 </button>
             </div>
@@ -209,34 +209,28 @@ const OrderStatus = () => {
             <div className="max-w-3xl mx-auto p-4 sm:p-5 md:p-6 lg:p-8 space-y-6 lg:space-y-8 animate-in fade-in duration-300">
 
                 {/* Status Timeline Card */}
-                <div className="bg-white dark:bg-slate-900 rounded-[2rem] sm:rounded-[2.5rem] shadow-sm hover:shadow-xl hover:shadow-primary-500/5 dark:shadow-[0_4px_30px_rgba(0,0,0,0.5)] border border-slate-100 dark:border-slate-800 p-6 sm:p-8 relative overflow-hidden transition-all">
-
-                    {/* Header info */}
-                    <div className="flex justify-between items-end border-b border-slate-100 dark:border-slate-800 pb-6 mb-8 relative z-10">
+                <div className="glass-card rounded-[2.5rem] premium-shadow border border-white/10 dark:border-white/5 p-8 relative overflow-hidden transition-all duration-700 animate-fade-in-up">
+                    <div className="flex justify-between items-end border-b border-white/10 dark:border-white/5 pb-8 mb-10 relative z-10">
                         <div>
-                            <p className="text-slate-400 dark:text-slate-500 font-bold text-xs uppercase tracking-widest mb-1.5 flex items-center gap-1.5"><MdOutlineTimer size={14} /> Estimated Delivery</p>
-                            <p className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white tracking-tighter">
-                                {activeOrder.status === 'Pending' ? '15-20' : activeOrder.status === 'Preparing' ? '10-15' : activeOrder.status === 'Ready' ? '1-2' : '--'}
-                                <span className="text-lg md:text-xl text-slate-400 dark:text-slate-500 font-bold ml-1">mins</span>
+                            <p className="text-slate-400 dark:text-slate-500 font-black text-[10px] uppercase tracking-[0.3em] mb-3 flex items-center gap-2"><MdOutlineTimer size={16} className="text-primary-500" /> Current Stage</p>
+                            <p className="text-5xl md:text-6xl font-black text-slate-900 dark:text-white tracking-tighter uppercase">
+                                {activeOrder.status === 'Pending' ? 'Received' : activeOrder.status === 'Preparing' ? 'Cooking' : activeOrder.status === 'Ready' ? 'Plated' : 'Served'}
                             </p>
                         </div>
-                        <div className="flex flex-col items-end gap-3 translate-y-2">
-                            <span className="bg-accent-50 dark:bg-accent-900/30 text-accent-700 dark:text-accent-400 font-black px-4 sm:px-5 py-2 sm:py-2.5 rounded-xl text-sm border border-accent-200 dark:border-accent-800 uppercase tracking-widest shadow-sm">
+                        <div className="flex flex-col items-end gap-3">
+                            <span className="bg-primary-600 text-white font-black px-5 py-2.5 rounded-2xl text-xs uppercase tracking-[0.2em] shadow-lg shadow-primary-600/20">
                                 Table {tableNo}
                             </span>
                         </div>
                     </div>
 
-                    <div className="relative pl-2 sm:pl-4 space-y-12 pb-4 z-10">
+                    <div className="relative pl-6 sm:pl-8 space-y-12 pb-4 z-10">
                         {/* Timeline Line Connector */}
-                        <div className="absolute left-[36px] sm:left-[44px] top-[10px] bottom-[10px] w-[3px] bg-slate-100 dark:bg-slate-800 rounded-full shadow-inner"></div>
+                        <div className="absolute left-[40px] sm:left-[48px] top-[10px] bottom-[10px] w-1 bg-slate-100 dark:bg-white/5 rounded-full"></div>
                         {currentStepIndex > 0 && (
                             <div
-                                className="absolute left-[36px] sm:left-[44px] top-[10px] w-[3px] bg-gradient-to-b from-primary-400 to-primary-600 dark:from-primary-500 dark:to-primary-400 rounded-full transition-all duration-[1500ms] ease-out shadow-lg shadow-primary-500/50"
-                                style={{
-                                    height: `${(currentStepIndex / (steps.length - 1)) * 100}%`,
-                                    maxHeight: 'calc(100% - 20px)'
-                                }}
+                                className="absolute left-[40px] sm:left-[48px] top-[10px] w-1 bg-primary-600 rounded-full transition-all duration-[2000ms] ease-out shadow-[0_0_15px_rgba(79,70,229,0.5)]"
+                                style={{ height: `${(currentStepIndex / (steps.length - 1)) * 100}%` }}
                             ></div>
                         )}
 
@@ -245,67 +239,56 @@ const OrderStatus = () => {
                             const isCurrent = index === currentStepIndex;
 
                             return (
-                                <div key={step.key} className={`relative flex items-center gap-6 sm:gap-8 transition-all duration-[800ms] ${!isCompleted ? 'opacity-30 grayscale' : 'opacity-100'}`}>
-                                    <div className={`w-14 h-14 sm:w-16 sm:h-16 rounded-[1.25rem] flex items-center justify-center flex-shrink-0 z-10 transition-colors duration-500 border-4 border-white dark:border-slate-900 ${isCurrent ? 'bg-primary-500 text-white shadow-xl shadow-primary-500/40 ring-4 ring-primary-100 dark:ring-primary-900/30' :
-                                        isCompleted ? 'bg-primary-100 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400 shadow-md border-transparent' :
-                                            'bg-slate-50 dark:bg-slate-800 text-slate-400 dark:text-slate-600'
+                                <div key={step.key} className={`relative flex items-center gap-8 transition-all duration-1000 ${!isCompleted ? 'opacity-20 blur-[1px]' : 'opacity-100'}`}>
+                                    <div className={`w-16 h-16 sm:w-20 sm:h-20 rounded-[2rem] flex items-center justify-center flex-shrink-0 z-10 transition-all duration-700 border-4 ${isCurrent ? 'bg-primary-600 text-white shadow-[0_0_30px_rgba(79,70,229,0.4)] border-white dark:border-slate-900 scale-110' :
+                                        isCompleted ? 'bg-primary-600/10 text-primary-600 border-transparent' :
+                                            'bg-slate-50 dark:bg-white/5 text-slate-400 border-transparent'
                                         }`}>
-                                        {isCompleted && !isCurrent && step.key !== 'Pending' ? <MdCheckCircleOutline size={28} className="text-primary-600 dark:text-primary-400" /> : <div className="text-[28px]">{step.icon}</div>}
+                                        {isCompleted && !isCurrent ? <MdCheckCircleOutline size={32} /> : <div className="text-3xl">{step.icon}</div>}
                                     </div>
-                                    <div className="pt-0.5 relative top-[2px]">
-                                        <h3 className={`font-black text-xl sm:text-2xl tracking-tight mb-1 ${isCurrent ? 'text-slate-900 dark:text-white' : 'text-slate-700 dark:text-slate-300'}`}>{step.label}</h3>
-                                        <p className="text-sm border-slate-500 dark:border-slate-400 font-medium">{step.desc}</p>
+                                    <div className="flex-1">
+                                        <h3 className={`font-black text-xl sm:text-2xl tracking-tighter uppercase mb-1 ${isCurrent ? 'text-slate-900 dark:text-white' : 'text-slate-500'}`}>{step.label}</h3>
+                                        <p className={`text-xs font-bold uppercase tracking-widest ${isCurrent ? 'text-primary-600' : 'text-slate-400 line-clamp-1'}`}>{step.desc}</p>
                                     </div>
                                 </div>
                             );
                         })}
                     </div>
-
-                    {/* Decorative fade / blur blob */}
-                    <div className="absolute -top-32 -right-32 w-64 h-64 bg-primary-400/10 rounded-full blur-[80px] pointer-events-none"></div>
                 </div>
 
-                {/* Bill Summary Accordion/Card */}
-                <div className="bg-white dark:bg-slate-900 rounded-[2rem] shadow-sm border border-slate-100 dark:border-slate-800 p-6 sm:p-8 space-y-4 relative overflow-hidden">
-                    {/* Decorative Top pattern */}
-                    <div className="absolute top-0 left-0 right-0 h-2 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyMCIgaGVpZ2h0PSI4Ij48cGF0aCBkPSJNIDEwIDggTCBUIDEwIDAgQyA3LjUgMCA3LjUgOCA1IDggQyAyLjUgOCAyLjUgMCAwIDAgTCAwIDggWiIgZmlsbD0iIzQzMzhDQSJmaWxsLW9wYWNpdHk9IjAuMSIvPjwvc3ZnPg==')] opacity-50 dark:opacity-20 flex w-full"></div>
-
-                    <h3 className="font-black text-slate-900 dark:text-white border-b border-slate-100 dark:border-slate-800 pb-4 mt-2 flex justify-between items-center tracking-tight text-xl">
-                        <span>Order Breakdown</span>
-                        <div className="flex gap-2 items-center">
-                            {isPaid && (
-                                <button onClick={handleDownloadBill} className="flex items-center justify-center w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:text-primary-600 dark:hover:text-primary-400 transition-colors" title="Download E-Receipt">
-                                    <MdDownload size={16} />
-                                </button>
-                            )}
-                            <span className={`text-xs px-3 py-1.5 rounded-lg font-black tracking-widest ${isPaid ? 'bg-emerald-100 dark:bg-emerald-900/40 text-emerald-700 dark:text-emerald-400 shadow-sm' : 'bg-rose-100 dark:bg-rose-900/40 text-rose-700 dark:text-rose-400 shadow-sm'}`}>
-                                {isPaid ? 'PAID' : 'UNPAID'}
+                {/* Bill Summary Card */}
+                <div className="glass-card rounded-[2.5rem] premium-shadow border border-white/10 dark:border-white/5 p-8 space-y-6 relative overflow-hidden animate-fade-in-up">
+                    <h3 className="font-black text-slate-900 dark:text-white border-b border-white/10 dark:border-white/5 pb-6 flex justify-between items-center tracking-tighter text-2xl uppercase">
+                        <span>Items <span className="text-primary-600">Ordered</span></span>
+                        <div className="flex gap-3 items-center">
+                            <span className={`text-[10px] px-4 py-2 rounded-xl font-black tracking-[0.2em] shadow-lg ${isPaid ? 'bg-emerald-600 text-white' : 'bg-rose-600 text-white animate-pulse'}`}>
+                                {isPaid ? 'PAID' : 'PENDING'}
                             </span>
                         </div>
                     </h3>
 
-                    <div className="space-y-4 pt-4 border-b border-slate-100 dark:border-slate-800 pb-6">
+                    <div className="space-y-5 pt-2">
                         {activeOrder.items.map((item, idx) => (
-                            <div key={idx} className="flex justify-between items-start text-base">
-                                <div className="flex gap-3">
-                                    <span className="font-black text-slate-400 dark:text-slate-500 bg-slate-50 dark:bg-slate-800 px-2 py-0.5 rounded-md text-sm mt-0.5">{item.quantity}x</span>
-                                    <span className="font-bold text-slate-700 dark:text-slate-300 leading-tight">{item.name}</span>
+                            <div key={idx} className="flex justify-between items-center group">
+                                <div className="flex items-center gap-4">
+                                    <span className="font-black text-primary-600 bg-primary-600/10 w-9 h-9 flex items-center justify-center rounded-xl text-xs">{item.quantity}</span>
+                                    <span className="font-black text-slate-700 dark:text-slate-300 uppercase tracking-tight text-sm group-hover:text-primary-600 transition-colors">{item.name}</span>
                                 </div>
-                                <span className="font-black text-slate-900 dark:text-white pl-4">₹{item.subtotal.toFixed(2)}</span>
+                                <span className="font-black text-slate-900 dark:text-white tracking-tighter">₹{item.subtotal.toFixed(2)}</span>
                             </div>
                         ))}
                     </div>
 
                     {activeOrder.notes && (
-                        <div className="text-sm bg-accent-50 dark:bg-accent-900/20 text-accent-800 dark:text-accent-300 p-4 rounded-2xl font-medium border border-accent-100 dark:border-accent-800/50 mt-4 leading-relaxed shadow-inner">
-                            <span className="font-black uppercase tracking-wider text-xs mb-1 block">Special Requests</span>
-                            {activeOrder.notes}
+                        <div className="bg-slate-50 dark:bg-white/5 p-6 rounded-[2rem] border border-white/5 mt-4 leading-relaxed shadow-inner">
+                            <span className="font-black uppercase tracking-[0.2em] text-[10px] text-primary-600 mb-2 block">Chef Instructions</span>
+                            <p className="text-sm font-bold text-slate-500 dark:text-slate-400">{activeOrder.notes}</p>
                         </div>
                     )}
 
-                    <div className="pt-4 flex justify-between items-end">
-                        <span className="font-black text-slate-500 dark:text-slate-400 uppercase tracking-widest text-xs relative top-[-4px]">Total Due</span>
-                        <span className="font-black text-3xl sm:text-4xl text-primary-600 dark:text-primary-400 tracking-tighter leading-none">₹{activeOrder.totalAmount.toFixed(2)}</span>
+                    <div className="pt-6 flex justify-between items-end border-t border-white/10 dark:border-white/5">
+                        <span className="font-black text-slate-400 uppercase tracking-[0.3em] text-[10px] mb-2">Grand Total</span>
+                        <span className="font-black text-4xl text-primary-600 dark:text-primary-400 tracking-tighter leading-none">₹{activeOrder.totalAmount.toFixed(2)}</span>
                     </div>
                 </div>
 
@@ -313,12 +296,12 @@ const OrderStatus = () => {
                 <div className="space-y-4">
                     {/* Payment Requested Alert */}
                     {isPaymentRequested && (
-                        <div className="bg-sky-50 dark:bg-sky-900/20 p-6 sm:p-8 rounded-[2rem] border border-sky-100 dark:border-sky-800 shadow-sm text-center flex flex-col items-center transition-colors">
-                            <div className="w-16 h-16 bg-sky-100 dark:bg-sky-800 text-sky-500 dark:text-sky-300 rounded-full flex items-center justify-center mb-4">
-                                <MdOutlineTimer size={32} className="animate-pulse" />
+                        <div className="glass-card-primary p-8 rounded-[2.5rem] text-center flex flex-col items-center transition-all animate-pulse shadow-2xl shadow-primary-600/20 duration-[2000ms]">
+                            <div className="w-20 h-20 bg-white/20 text-white rounded-full flex items-center justify-center mb-6 backdrop-blur-md">
+                                <MdOutlineTimer size={40} />
                             </div>
-                            <h3 className="font-black text-xl text-slate-900 dark:text-white mb-2">Resolving Payment</h3>
-                            <p className="text-slate-600 dark:text-slate-400 font-medium">Please wait momentarily. Our staff is heading to your table to collect your {activeOrder.paymentMode} payment.</p>
+                            <h3 className="font-black text-2xl text-white mb-3 tracking-tighter uppercase">Processing Payment</h3>
+                            <p className="text-primary-100 font-bold text-xs uppercase tracking-[0.2em] leading-loose">Please wait. A member of our team is arriving at Table {tableNo} to assist you.</p>
                         </div>
                     )}
 
@@ -374,22 +357,24 @@ const OrderStatus = () => {
                 </div>
             </div>
 
-            {/* Floating Action Button (Pay / Order More) - Stickied above the Global Bottom Nav */}
-            <div className="fixed bottom-[84px] md:bottom-[92px] w-full max-w-md md:max-w-3xl left-1/2 -translate-x-1/2 p-4 z-40 bg-gradient-to-t from-slate-50 dark:from-slate-950 via-transparent to-transparent pb-6">
-                <div className="flex gap-3 sm:gap-4">
+            {/* Floating Action Button (Pay / Order More) */}
+            <div className="fixed bottom-[110px] w-full max-w-[92%] md:max-w-xl left-1/2 -translate-x-1/2 z-40 bg-gradient-to-t from-slate-50 dark:from-[#020617] via-transparent to-transparent pb-4">
+                <div className="flex gap-4">
                     <button
                         onClick={() => navigate('/menu')}
-                        className={`flex-1 rounded-[1.5rem] font-bold text-base shadow-lg shadow-slate-200/50 dark:shadow-slate-900/50 flex justify-center items-center px-6 transition-all active:scale-95 border-2 bg-white dark:bg-slate-900 text-slate-700 dark:text-slate-300 border-slate-200 dark:border-slate-800 hover:border-slate-300 dark:hover:border-slate-700 hover:shadow-xl`}
+                        className="flex-1 glass-card bg-slate-100 dark:bg-white/5 rounded-[2rem] font-black text-xs uppercase tracking-widest text-slate-700 dark:text-white h-16 transition-all active:scale-95 border border-white/10 premium-shadow"
                     >
                         Order More
                     </button>
                     {!isPaymentRequested && (
                         <button
                             onClick={() => setShowPaymentOptions(true)}
-                            className={`flex-[1.5] bg-emerald-500 text-white rounded-[1.5rem] font-black text-lg shadow-xl shadow-emerald-500/30 flex justify-between items-center p-4 px-6 transition-all hover:bg-emerald-600 hover:shadow-emerald-600/40 active:scale-95 group`}
+                            className="flex-[1.8] bg-emerald-600 text-white rounded-[2.5rem] font-black text-lg shadow-2xl shadow-emerald-600/40 flex justify-between items-center p-1.5 h-20 transition-all hover:bg-emerald-700 active:scale-95 group border border-white/20"
                         >
-                            <span className="flex items-center gap-2"><MdPayment size={24} /> Pay Bill</span>
-                            <span className="bg-white/20 px-3 py-1.5 rounded-xl text-base shadow-inner group-hover:bg-white/30 transition-colors">₹{activeOrder.totalAmount.toFixed(2)}</span>
+                            <span className="flex items-center gap-3 pl-8 uppercase tracking-widest text-sm"><MdPayment size={28} /> Pay</span>
+                            <div className="h-16 px-6 bg-white/20 rounded-[2rem] flex items-center justify-center font-black tracking-tighter text-xl backdrop-blur-md">
+                                ₹{activeOrder.totalAmount.toFixed(2)}
+                            </div>
                         </button>
                     )}
                 </div>
