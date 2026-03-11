@@ -5,7 +5,7 @@ import { useGetTableOrderStatusQuery } from '../features/order/orderApiSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart, updateQuantity, removeFromCart, clearSession } from '../features/cart/cartSlice';
 import { toast } from 'react-toastify';
-import { MdAdd, MdRemove, MdFastfood, MdSearch, MdReceiptLong, MdDeleteOutline, MdStarRate, MdStar, MdClose, MdLocalFireDepartment, MdThumbUp, MdSort, MdDarkMode, MdLightMode, MdFilterList, MdHome, MdShoppingCart, MdHistory, MdRestaurantMenu, MdWineBar, MdCoffee, MdIcecream, MdLunchDining, MdPizza, MdSetMeal } from 'react-icons/md';
+import { MdAdd, MdRemove, MdFastfood, MdSearch, MdReceiptLong, MdDeleteOutline, MdStarRate, MdStar, MdClose, MdLocalFireDepartment, MdThumbUp, MdSort, MdDarkMode, MdLightMode, MdFilterList, MdHome, MdShoppingCart, MdHistory, MdRestaurantMenu, MdWineBar, MdCoffee, MdIcecream, MdLunchDining, MdLocalPizza, MdSetMeal } from 'react-icons/md';
 import { useNavigate } from 'react-router-dom';
 import { getImageUrl } from '../utils/getImageUrl';
 import { useEffect, useRef } from 'react';
@@ -137,7 +137,7 @@ const CustomerMenu = () => {
     // Category Icon Mapping
     const getCategoryIcon = (name) => {
         const lower = name.toLowerCase();
-        if (lower.includes('pizza')) return <MdPizza size={20} />;
+        if (lower.includes('pizza')) return <MdLocalPizza size={20} />;
         if (lower.includes('burger') || lower.includes('fast')) return <MdLunchDining size={20} />;
         if (lower.includes('drink') || lower.includes('bev')) return <MdWineBar size={20} />;
         if (lower.includes('coffee') || lower.includes('tea')) return <MdCoffee size={20} />;
