@@ -48,12 +48,17 @@
     color: var(--text-main);
     font-family: 'Outfit', sans-serif;
     scroll-behavior: smooth;
-    transition: background-color 0.5s ease-in-out, color 0.5s ease-in-out, border-color 0.5s ease-in-out;
+    color-scheme: light dark;
   }
 
-  /* Apply transition to all elements for buttery-smooth dark mode toggle */
+  /* Buttery smooth global transitions for dark mode toggle */
   *, *::before, *::after {
-    transition: background 0.6s ease-in-out, background-color 0.6s ease-in-out, color 0.6s ease-in-out, border-color 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
+    transition: background-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                background 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                border-color 0.8s cubic-bezier(0.4, 0, 0.2, 1), 
+                box-shadow 0.8s cubic-bezier(0.4, 0, 0.2, 1),
+                backdrop-filter 0.8s cubic-bezier(0.4, 0, 0.2, 1);
   }
 }
 

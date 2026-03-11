@@ -177,7 +177,7 @@ const OrderStatus = () => {
                     <button onClick={handleDownloadBill} className="w-full flex justify-center items-center glass-card text-slate-900 dark:text-white font-black px-6 py-6 rounded-[2rem] active:scale-95 group uppercase tracking-widest text-sm">
                         <MdDownload className="mr-3 group-hover:translate-y-1 transition-transform" size={24} /> E-Receipt
                     </button>
-                    <button onClick={() => { dispatch(clearSession()); window.location.href = '/'; }} className="w-full bg-primary-600 hover:bg-primary-700 text-white font-black px-6 py-6 rounded-[2.5rem] shadow-2xl shadow-primary-600/40 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-tighter text-lg">
+                    <button onClick={() => { navigate('/thank-you'); }} className="w-full bg-primary-600 hover:bg-primary-700 text-white font-black px-6 py-6 rounded-[2.5rem] shadow-2xl shadow-primary-600/40 transition-all active:scale-95 flex items-center justify-center gap-3 uppercase tracking-tighter text-lg">
                         Close Table <MdClose size={24} />
                     </button>
                 </div>
