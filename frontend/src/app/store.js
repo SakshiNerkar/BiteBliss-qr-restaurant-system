@@ -12,8 +12,11 @@ import { subcategoryApi } from '../features/subcategory/subcategoryApiSlice';
 export const rtkQueryErrorLogger = (api) => (next) => (action) => {
     if (isRejectedWithValue(action)) {
         if (action.payload?.status === 401) {
-            api.dispatch(logout());
-            window.location.href = '/admin/login';
+            // Only redirect if we are currently in an admin route
+            if (window.location.pathname.startsWith('/admin')) {
+                api.dispatch(logout());
+                window.location.href = '/admin/login';
+            }
         }
     }
     return next(action);

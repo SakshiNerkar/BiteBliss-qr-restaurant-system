@@ -31,9 +31,11 @@ api.interceptors.response.use(
     (response) => response,
     (error) => {
         if (error.response && error.response.status === 401) {
-            // Clear token and redirect to login
-            sessionStorage.removeItem('userInfo');
-            window.location.href = '/admin/login';
+            // Only redirect to admin login if the user is currently trying to access an admin route
+            if (window.location.pathname.startsWith('/admin')) {
+                sessionStorage.removeItem('userInfo');
+                window.location.href = '/admin/login';
+            }
         }
         return Promise.reject(error);
     }

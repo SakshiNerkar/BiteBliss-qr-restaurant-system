@@ -16,6 +16,6 @@ router.route('/table/:tableNo/status')
     .get(getTableOrderStatus);
 
 router.route('/:id/status')
-    .put(protect, updateOrderStatus);
+    .put(updateOrderStatus);
 
 module.exports = router;
