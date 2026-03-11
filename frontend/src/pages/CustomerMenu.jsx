@@ -351,7 +351,7 @@ const CustomerMenu = () => {
                             </button>
                         </div>
                     </div>
-                )})}
+                )}
 
                 {/* Detailed Item Modal Overlay */}
                 {selectedItem && (
