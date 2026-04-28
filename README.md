@@ -35,18 +35,6 @@ BiteBliss is a full-stack web application designed for restaurants to modernize 
 
 ---
 
-## 📸 Previews
-
-### Customer Experience (Mobile Optimized)
-
-*(Add screenshots of your Customer Cart, Menu, and Timeline Tracking here)*
-
-### Admin Dashboard (Desktop Optimized)
-
-*(Add screenshots of your Dashboard metrics, Menu Management, and Live Tables here)*
-
----
-
 ## 🚀 Quick Setup Guide
 
 ### Prerequisites
